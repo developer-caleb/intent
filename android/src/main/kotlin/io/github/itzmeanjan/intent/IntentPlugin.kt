@@ -73,7 +73,17 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                         false
                 }
                 else -> {
-                    false
+                    if (resultCode == Activity.RESULT_OK) {
+                        if (intent.extras != null) {
+                            val returnExtras = mutableListOf<String>()
+                            for (key in intent.extras!!.keySet()) {
+                                returnExtras.add(intent.extras!!.get(key).toString())
+                            }
+                            result.success(returnExtras)
+                        }
+                        true
+                    } else
+                        false
                 }
             }
         }
