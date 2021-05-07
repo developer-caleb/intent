@@ -73,7 +73,11 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                         false
                 }
                 else -> {
-                    false
+                    if (resultCode == Activity.RESULT_OK) {
+                        result.success(intent.dataString)
+                        true
+                    } else
+                        false
                 }
             }
         }
@@ -88,7 +92,7 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                 if (call.argument<String>("data") != null)
                     intent.data = Uri.parse(call.argument<String>("data"))
                 if (call.argument<String>("componentName") != null)
-                    intent.component = ComponentName(call.argument<String>("package").toString(), call.argument<String>("componentName").toString())
+                    intent.component = ComponentName(call.argument<String>("package")!!, call.argument<String>("componentName")!!)
 
                 // typeInfo parsed into associative array, which can be used for type casting extra data
                 val typeInfo = call.argument<Map<String, String>>("typeInfo")
@@ -291,6 +295,7 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                             }
                         }
                     } else {
+                        if (call.argument<Int>("requestCode") != null) activity.startActivityForResult(intent, call.argument<Int>("requestCode")!!)
                         if (call.argument<Boolean>("chooser")!!) activity.startActivityForResult(Intent.createChooser(intent, "Sharing"), activityIdentifierCode)
                         else activity.startActivityForResult(intent, activityIdentifierCode)
                     }

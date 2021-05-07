@@ -87,7 +87,8 @@ class Intent {
   /// from intent, then this method needs to be called. Returns
   /// a future, which will be resolved if platform call gets
   /// successful, otherwise results into error.
-  Future<List<String>> startActivityForResult({bool createChooser: false}) {
+  Future<List<String>> startActivityForResult(
+      {bool createChooser: false, int requestCode}) {
     Map<String, dynamic> parameters = {};
 
     if (_action != null) parameters['action'] = _action;
@@ -99,6 +100,7 @@ class Intent {
     if (_extra.isNotEmpty) parameters['extra'] = _extra;
     if (_typeInfo.isNotEmpty) parameters['typeInfo'] = _typeInfo;
     if (_componentName != null) parameters['componentName'] = _componentName;
+    if (requestCode != null) parameters['requestCode'] = requestCode;
 
     parameters['chooser'] = createChooser;
 
