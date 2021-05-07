@@ -79,7 +79,7 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                             for (key in intent.extras!!.keySet()) {
                                 returnExtras.add(intent.extras!!.get(key).toString())
                             }
-                            result.success(returnExtras)
+                            activityCompletedCallBack?.sendDocument(returnExtras)
                         }
                         true
                     } else
