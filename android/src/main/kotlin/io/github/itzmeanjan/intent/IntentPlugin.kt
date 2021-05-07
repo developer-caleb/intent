@@ -73,11 +73,7 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                         false
                 }
                 else -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        result.success(intent.dataString)
-                        true
-                    } else
-                        false
+                    false
                 }
             }
         }
@@ -295,9 +291,11 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                             }
                         }
                     } else {
-                        if (call.argument<Int>("requestCode") != null) activity.startActivityForResult(intent, call.argument<Int>("requestCode")!!)
-                        if (call.argument<Boolean>("chooser")!!) activity.startActivityForResult(Intent.createChooser(intent, "Sharing"), activityIdentifierCode)
-                        else activity.startActivityForResult(intent, activityIdentifierCode)
+                        when {
+                            call.argument<Int>("requestCode") != null -> activity.startActivityForResult(intent, call.argument<Int>("requestCode")!!)
+                            call.argument<Boolean>("chooser")!! -> activity.startActivityForResult(Intent.createChooser(intent, "Sharing"), activityIdentifierCode)
+                            else -> activity.startActivityForResult(intent, activityIdentifierCode)
+                        }
                     }
                 } catch (e: Exception) {
                     result.error("Error", e.toString(), null)
