@@ -88,7 +88,7 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                 if (call.argument<String>("data") != null)
                     intent.data = Uri.parse(call.argument<String>("data"))
                 if (call.argument<String>("componentName") != null)
-                    intent.component = ComponentName(call.argument<String>("package")!!, call.argument<String>("componentName")!!)
+                    intent.component = ComponentName(call.argument<String>("package").toString(), call.argument<String>("componentName").toString())
 
                 // typeInfo parsed into associative array, which can be used for type casting extra data
                 val typeInfo = call.argument<Map<String, String>>("typeInfo")
