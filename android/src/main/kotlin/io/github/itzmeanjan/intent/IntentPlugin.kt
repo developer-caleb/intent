@@ -1,6 +1,7 @@
 package io.github.itzmeanjan.intent
 
 import android.app.Activity
+import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
@@ -87,7 +88,7 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                 if (call.argument<String>("data") != null)
                     intent.data = Uri.parse(call.argument<String>("data"))
                 if (call.argument<String>("componentName") != null)
-                    intent.component = ComponentName(call.argument<String>("package"), call.argument<String>("componentName"))
+                    intent.component = ComponentName(call.argument<String>("package")!!, call.argument<String>("componentName")!!)
 
                 // typeInfo parsed into associative array, which can be used for type casting extra data
                 val typeInfo = call.argument<Map<String, String>>("typeInfo")
@@ -191,7 +192,7 @@ class IntentPlugin(private val registrar: Registrar, private val activity: Activ
                 if (call.argument<String>("data") != null)
                     intent.data = Uri.parse(call.argument<String>("data"))
                 if (call.argument<String>("componentName") != null)
-                    intent.component = ComponentName(call.argument<String>("package"), call.argument<String>("componentName"))
+                    intent.component = ComponentName(call.argument<String>("package")!!, call.argument<String>("componentName")!!)
                 
                 // typeInfo parsed into associative array, which can be used for type casting extra data
                 val typeInfo = call.argument<Map<String, String>>("typeInfo")
