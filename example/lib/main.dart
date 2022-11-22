@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:intent/intent.dart' as android_intent;
-import 'package:intent/action.dart' as android_action;
 import 'dart:async' show StreamController;
 import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:intent/action.dart' as android_action;
+import 'package:intent/intent.dart' as android_intent;
 
 void main() => runApp(MyApp());
 
@@ -66,9 +67,7 @@ class _MyAppState extends State<MyApp> {
                       : CircularProgressIndicator(),
                 ),
               ),
-              RaisedButton(
-                color: Colors.cyanAccent,
-                elevation: 16,
+              TextButton(
                 onPressed: () => android_intent.Intent()
                   ..setAction(android_action.Action.ACTION_IMAGE_CAPTURE)
                   ..startActivityForResult().then(
